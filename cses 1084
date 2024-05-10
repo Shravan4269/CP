@@ -1,0 +1,51 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int is_applicant(int *arr, int n, int k, int target) {
+    static int start = 0;
+    if(start==n){
+        return 0;
+    }
+    int end = n - 1;
+    while (end - start > 1) {
+        int mid = (start + end) / 2;
+        if (arr[mid] > target + k) {
+            end = mid;
+        } else if (arr[mid] < target - k) {
+            start = mid;
+        } else {
+            end = mid;
+        }
+    }
+    if (arr[start] >= target - k && arr[start] <= target + k) {
+        start++;
+        return 1;
+    }
+    if (arr[end] >= target - k && arr[end] <= target + k) {
+        start = end + 1;
+        return 1;
+    } else
+        return 0;
+}
+
+int main() {
+    int n, m, k;
+    cin >> n >> m >> k;
+    int arr[n];
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    sort(arr, arr + n);
+    int app[m];
+    int cnt = 0;
+    for (int i = 0; i < m; i++) {
+        cin >> app[i];
+    }
+    sort(app, app + m);
+    for (int i = 0; i < m; i++) {
+        cnt = cnt + is_applicant(arr, n, k, app[i]);
+    }
+    cout << cnt;
+}
+
