@@ -1,0 +1,16 @@
+Parantheses checker via stack
+vector <char> arr;
+    for(auto it = x.begin();it!=x.end();it++){
+        if(*it == '[' || *it == '{' || *it == '('){
+            arr.push_back(*it);
+        }
+        else{
+            if(arr.empty()){
+                return false;
+            }
+            if((*it==']' && arr.back()=='[') || (*it=='}' && arr.back()=='{') || (*it==')' && arr.back()=='(')) arr.pop_back();
+            else return false;
+        }
+    }
+    if(arr.empty()) return true;
+    else return false;
